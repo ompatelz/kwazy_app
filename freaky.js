@@ -260,13 +260,13 @@ class FreakyEngine {
     // Push freaky quotes to bippy insults
     window.bippy.insults.push(...freakyQuotes);
 
-    // Periodically whisper freaky quote if freakiness is high
+    // Periodically whisper freaky quote if freakiness is high (relaxed frequency)
     setInterval(() => {
-      if (this.freakLevel >= 60 && Math.random() > 0.5 && window.bippy) {
+      if (this.freakLevel >= 60 && Math.random() > 0.6 && window.bippy) {
         const q = freakyQuotes[Math.floor(Math.random() * freakyQuotes.length)];
         window.bippy.say(q);
       }
-    }, 22000);
+    }, 80000);
   }
 }
 

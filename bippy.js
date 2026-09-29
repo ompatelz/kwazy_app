@@ -105,12 +105,12 @@ class BippyAssistant {
       this.say("Don't poke me. I am an enterprise asset, not a squeaky toy.");
     });
 
-    // Random periodic insults
+    // Random periodic insults (relaxed frequency so user can explore)
     setInterval(() => {
-      if (Math.random() > 0.6) {
+      if (Math.random() > 0.7) {
         this.sayRandom();
       }
-    }, 18000);
+    }, 75000);
   }
 
   say(msg) {

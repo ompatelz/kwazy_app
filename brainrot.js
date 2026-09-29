@@ -218,15 +218,19 @@ class BrainrotEngine {
       }
     ];
 
+    // Significantly reduced frequency: check every 90 seconds, max 1 popup on screen
     setInterval(() => {
-      if (document.querySelectorAll('.cursed-popup-win').length < 3) {
+      if (document.querySelectorAll('.cursed-popup-win').length < 1) {
         const template = popupTemplates[Math.floor(Math.random() * popupTemplates.length)];
         this.spawnPopup(template);
       }
-    }, 16000);
+    }, 90000);
   }
 
   spawnPopup(template) {
+    // Only allow 1 popup at any given time to protect user flow
+    if (document.querySelectorAll('.cursed-popup-win').length >= 1) return;
+
     this.popupCount++;
     const pop = document.createElement('div');
     pop.className = 'cursed-popup-win';
@@ -254,17 +258,14 @@ class BrainrotEngine {
     closeBtn.addEventListener('click', () => {
       if (window.soundEngine) window.soundEngine.playBoing();
       pop.remove();
-      // 50% chance to spawn another popup in retribution
-      if (Math.random() > 0.5) {
-        setTimeout(() => {
-          this.spawnPopup({
-            title: "👿 YOU CANNOT ESCAPE CAPITALISM",
-            body: "Closing ads incurs a 4% cognitive processing fee.",
-            cta: "ACCEPT DEFEAT"
-          });
-        }, 500);
-      }
     });
+
+    // Auto-dismiss after 14 seconds if left open
+    setTimeout(() => {
+      if (document.body.contains(pop)) {
+        pop.remove();
+      }
+    }, 14000);
 
     const ctaBtn = pop.querySelector('.popup-cta-btn');
     ctaBtn.addEventListener('click', () => {
@@ -450,8 +451,8 @@ class BrainrotEngine {
   // 8. Psychological Warfare: Random Discord Mention Pings
   initPsychologicalDiscordPings() {
     setInterval(() => {
-      // 30% chance every 20 seconds
-      if (Math.random() > 0.3) {
+      // Rare occurrence: 40% chance every 2 minutes
+      if (Math.random() > 0.6) {
         if (window.soundEngine) window.soundEngine.playDiscordPing();
 
         const toast = document.createElement('div');
@@ -472,9 +473,9 @@ class BrainrotEngine {
           toast.remove();
         });
 
-        setTimeout(() => toast.remove(), 4500);
+        setTimeout(() => toast.remove(), 3500);
       }
-    }, 22000);
+    }, 120000);
   }
 
   // 9. The Bouncing DVD / AntiOS Logo Screen Hazard
