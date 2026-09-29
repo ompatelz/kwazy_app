@@ -379,6 +379,45 @@ class AntiAudioEngine {
     osc.stop(now + 3.0);
   }
 
+  // Comical Squeaky Rubber Duck
+  playRubberDuck() {
+    if (!this.soundEnabled || !this.ctx) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(800, now);
+    osc.frequency.exponentialRampToValueAtTime(1400, now + 0.1);
+    osc.frequency.exponentialRampToValueAtTime(600, now + 0.22);
+
+    gain.gain.setValueAtTime(0.3, now);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.22);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.22);
+  }
+
+  // Two-Tone Emergency Nuclear Klaxon
+  playKlaxon() {
+    if (!this.soundEnabled || !this.ctx) return;
+    const now = this.ctx.currentTime;
+    for (let i = 0; i < 3; i++) {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sawtooth';
+      const freq = i % 2 === 0 ? 550 : 440;
+      osc.frequency.setValueAtTime(freq, now + i * 0.25);
+      gain.gain.setValueAtTime(0.3, now + i * 0.25);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.25 + 0.2);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now + i * 0.25);
+      osc.stop(now + i * 0.25 + 0.2);
+    }
+  }
+
   // Repetitive 8-bit off-key Elevator BGM loop
   startElevatorBgm() {
     if (this.bgmPlaying || !this.soundEnabled) return;

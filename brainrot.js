@@ -28,6 +28,10 @@ class BrainrotEngine {
     this.initPsychologicalDiscordPings();
     this.initBouncingDvdLogo();
     this.initTacoBellButton();
+    this.initSelfDestructSystem();
+    this.initMemeSoundboardModal();
+    this.initAntiCapitalistMiner();
+    this.initFallingCookiesVolcano();
   }
 
   // 1. Live Aura / Social Credit Score Tracker
@@ -789,6 +793,200 @@ class BrainrotEngine {
             if (window.soundEngine) window.soundEngine.playBoing();
           }
         }
+      }
+    });
+  }
+
+  // 15. Emergency Self-Destruct Meltdown Sequence
+  initSelfDestructSystem() {
+    const nav = document.getElementById('mainNav');
+    if (!nav) return;
+
+    const nukeBtn = document.createElement('button');
+    nukeBtn.className = 'nav-tab danger-nuke';
+    nukeBtn.innerText = '🚨 SELF-DESTRUCT (Do Not Click)';
+    nukeBtn.style.background = '#ff0000';
+    nukeBtn.style.color = '#fff';
+    nukeBtn.style.animation = 'blink 0.6s infinite';
+    nav.appendChild(nukeBtn);
+
+    nukeBtn.addEventListener('click', () => {
+      const confirmNuke = confirm("⚠️ ATOMIC WARNING: Are you 100% sure you want to vaporize AntiOS? This action will void your monitor's warranty.");
+      if (!confirmNuke) return;
+
+      if (window.soundEngine) {
+        window.soundEngine.init();
+        window.soundEngine.soundEnabled = true;
+        window.soundEngine.playAirRaidSiren();
+        window.soundEngine.playKlaxon();
+      }
+
+      let count = 6;
+      const nukeOverlay = document.createElement('div');
+      nukeOverlay.className = 'modal-overlay nuke-active';
+      nukeOverlay.innerHTML = `
+        <div class="nuke-countdown-box">
+          <div style="font-size: 64px;">☢️</div>
+          <h1 style="color: #ff0000; font-size: 32px; margin: 10px 0;">MELTDOWN IMMINENT</h1>
+          <div style="font-size: 72px; font-weight: bold; font-family: monospace; color: #ffff00;" id="nukeTimer">0:0${count}</div>
+          <p style="color: #fff; margin-top: 10px;">Please evacuate your office chair immediately.</p>
+        </div>
+      `;
+      document.body.appendChild(nukeOverlay);
+      document.body.classList.add('earthquake');
+
+      const timerElem = document.getElementById('nukeTimer');
+      const nukeInterval = setInterval(() => {
+        count--;
+        if (timerElem) timerElem.innerText = `0:0${count}`;
+        if (window.soundEngine) window.soundEngine.playDing();
+
+        if (count <= 0) {
+          clearInterval(nukeInterval);
+          // Trigger Windows Blue Screen of Death
+          nukeOverlay.innerHTML = `
+            <div class="bsod-screen">
+              <h2 style="background:#fff; color:#0000aa; display:inline-block; padding:2px 8px;">Windows</h2>
+              <p style="margin-top:20px;">A fatal exception 0E has occurred at 0028:C0011E36 in VXD BRAINROT(01) + 00010E36.</p>
+              <p>The current application will be terminated.</p>
+              <p style="margin: 20px 0;">* Press any key to question your life decisions.<br>* Press CTRL+ALT+DEL to donate 100,000 Aura to Ohio.</p>
+              <p style="color:#ffff00; font-weight:bold;">[Click anywhere to resurrect in Australian Mode]</p>
+            </div>
+          `;
+          if (window.soundEngine) window.soundEngine.playMetalPipe();
+
+          nukeOverlay.addEventListener('click', () => {
+            nukeOverlay.remove();
+            document.body.classList.remove('earthquake');
+            document.body.style.transform = 'rotate(180deg)';
+            alert("🙃 Resurrection complete. Welcome to AntiOS Sydney Edition.");
+          }, { once: true });
+        }
+      }, 1000);
+    });
+  }
+
+  // 16. Floating Meme Soundboard Drawer
+  initMemeSoundboardModal() {
+    const soundboardBtn = document.createElement('button');
+    soundboardBtn.className = 'soundboard-fab-btn';
+    soundboardBtn.innerHTML = '📢 MEME SOUNDBOARD';
+    document.body.appendChild(soundboardBtn);
+
+    const sbModal = document.createElement('div');
+    sbModal.className = 'soundboard-drawer hidden';
+    sbModal.innerHTML = `
+      <div class="soundboard-header">
+        <span>📢 MLG MEME SOUNDBOARD OF DISRESPECT</span>
+        <button class="close-x" id="closeSbBtn">✕</button>
+      </div>
+      <div class="soundboard-grid">
+        <button class="sb-btn" data-sound="tacobell">🔔 Taco Bell</button>
+        <button class="sb-btn" data-sound="fart">💨 Reverb Fart</button>
+        <button class="sb-btn" data-sound="pipe">💀 Metal Pipe</button>
+        <button class="sb-btn" data-sound="airhorn">🎺 Airhorn</button>
+        <button class="sb-btn" data-sound="vineboom">💥 Vine Boom</button>
+        <button class="sb-btn" data-sound="duck">🦆 Rubber Duck</button>
+        <button class="sb-btn" data-sound="discord">💬 Discord Ping</button>
+        <button class="sb-btn" data-sound="siren">🚨 Police Siren</button>
+      </div>
+    `;
+    document.body.appendChild(sbModal);
+
+    soundboardBtn.addEventListener('click', () => {
+      sbModal.classList.toggle('hidden');
+      if (window.soundEngine) {
+        window.soundEngine.init();
+        window.soundEngine.soundEnabled = true;
+      }
+    });
+
+    sbModal.querySelector('#closeSbBtn').addEventListener('click', () => {
+      sbModal.classList.add('hidden');
+    });
+
+    sbModal.querySelectorAll('.sb-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const snd = btn.getAttribute('data-sound');
+        if (!window.soundEngine) return;
+        window.soundEngine.init();
+        window.soundEngine.soundEnabled = true;
+
+        switch (snd) {
+          case 'tacobell': window.soundEngine.playTacoBell(); break;
+          case 'fart': window.soundEngine.playReverbFart(); break;
+          case 'pipe': window.soundEngine.playMetalPipe(); break;
+          case 'airhorn': window.soundEngine.playAirhorn(); break;
+          case 'vineboom': window.soundEngine.playVineBoom(); break;
+          case 'duck': window.soundEngine.playRubberDuck(); break;
+          case 'discord': window.soundEngine.playDiscordPing(); break;
+          case 'siren': window.soundEngine.playPoliceSiren(); break;
+        }
+
+        this.deductAura(150);
+      });
+    });
+  }
+
+  // 17. Anti-Capitalist Debt Miner (Infinite National Debt Generator)
+  initAntiCapitalistMiner() {
+    const desktop = document.getElementById('tab-todo');
+    if (!desktop) return;
+
+    const minerCard = document.createElement('div');
+    minerCard.className = 'setting-card';
+    minerCard.style.marginTop = '16px';
+    minerCard.innerHTML = `
+      <h4>⛏️ Anti-Capitalist Crypto Miner (Debt Protocol)</h4>
+      <p>Click below to solve arbitrary proof-of-work puzzles that plunge you deeper into fiscal insolvency:</p>
+      <div style="display:flex; justify-content:space-between; align-items:center; background:#000; color:#00ff66; padding:10px; font-family:monospace; margin-bottom:10px;">
+        <span>National Debt Accumulated:</span>
+        <span id="debtCounterVal" style="font-size:18px; color:#ff0055; font-weight:bold;">$0.00</span>
+      </div>
+      <button class="action-btn primary" id="mineDebtBtn" style="width:100%;">⛏️ Mine 1 AntiCoin (+$4,200 Debt)</button>
+    `;
+    desktop.querySelector('.panel-body').appendChild(minerCard);
+
+    let currentDebt = 0;
+    const debtElem = minerCard.querySelector('#debtCounterVal');
+    const mineBtn = minerCard.querySelector('#mineDebtBtn');
+
+    mineBtn.addEventListener('click', () => {
+      currentDebt += 4200.69;
+      debtElem.innerText = `$${currentDebt.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+      if (window.soundEngine) window.soundEngine.playClick();
+      this.deductAura(1000);
+
+      if (currentDebt >= 20000 && Math.random() > 0.5) {
+        if (window.soundEngine) window.soundEngine.playPoliceSiren();
+        alert("🚨 IRS NOTICE: Your rapid wealth reduction has flagged you as a tax bracket threat. Please report to the nearest bread line.");
+      }
+    });
+  }
+
+  // 18. Cookie Volcano (Rain Falling Cookies on Screen)
+  initFallingCookiesVolcano() {
+    const cookieActions = document.querySelector('.cookie-actions');
+    if (!cookieActions) return;
+
+    const bakeBtn = document.createElement('button');
+    bakeBtn.className = 'action-btn gamble';
+    bakeBtn.innerText = '🍪 BAKE MORE COOKIES (VOLCANO)';
+    cookieActions.appendChild(bakeBtn);
+
+    bakeBtn.addEventListener('click', () => {
+      if (window.soundEngine) window.soundEngine.playBoing();
+      for (let i = 0; i < 25; i++) {
+        setTimeout(() => {
+          const cookie = document.createElement('div');
+          cookie.className = 'falling-cookie';
+          cookie.innerText = '🍪';
+          cookie.style.left = `${Math.random() * window.innerWidth}px`;
+          cookie.style.animationDuration = `${1.5 + Math.random() * 2}s`;
+          document.body.appendChild(cookie);
+
+          setTimeout(() => cookie.remove(), 3500);
+        }, i * 60);
       }
     });
   }
