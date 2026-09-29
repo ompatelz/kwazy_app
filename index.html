@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AntiOS™ Enterprise 98 Pro Max — The Friction-Maximalist Suite</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-geocities" id="app-body">
+
+  <!-- THE CURSED MARQUEE BANNER -->
+  <div class="cursed-ticker-bar">
+    <div class="ticker-label">⚠️ EMERGENCY BROADCAST:</div>
+    <div class="marquee-wrapper">
+      <span class="marquee-content">
+        🚨 ALERT: 8,421 unnecessary cookies installed. | 📉 PRODUCTIVITY DOWN 99.4% THIS QUARTER — CONGRATULATIONS! | 🚨 TIP: Please do not click buttons with excessive confidence. | 🐌 NETWORK STATUS: Dial-up emulation enabled (14.4 kbps) | 🪟 Windows 98 has detected your cursor is moving too smoothly. Introducing 250ms of artificial lag... | 🏆 VOTED #1 LEAST HELPFUL APPLICATION BY FORBES NEGATIVE
+      </span>
+    </div>
+    <button class="sound-toggle-btn" id="soundToggleBtn">🔊 Sound: OFF</button>
+  </div>
+
+  <!-- TOP OS WINDOW BAR -->
+  <header class="os-header">
+    <div class="os-title">
+      <span class="icon">💾</span>
+      <strong>AntiOS™ Enterprise 98 Pro Max [UNREGISTERED TRIAL - 4 MINUTES REMAINING]</strong>
+    </div>
+    <div class="os-header-actions">
+      <button class="boss-key-btn" id="bossKeyBtn" title="Panic! Fake Excel Mode">📊 BOSS KEY (Press Esc)</button>
+      <button class="win-btn" id="minimizeBtn">_</button>
+      <button class="win-btn" id="maximizeBtn">🗖</button>
+      <button class="win-btn close" id="closeWinBtn">✕</button>
+    </div>
+  </header>
+
+  <!-- NAVIGATION TABS THAT MIGRATE -->
+  <nav class="hostile-nav" id="mainNav">
+    <button class="nav-tab active" data-tab="tab-registration">📋 Registration (Painful)</button>
+    <button class="nav-tab" data-tab="tab-todo">📝 Counter-Productive To-Do</button>
+    <button class="nav-tab" data-tab="tab-settings">⚙️ Settings From Hell</button>
+    <button class="nav-tab" data-tab="tab-support">🤖 KarenGPT Support AI</button>
+    <button class="nav-tab run-away" id="logoutTab">🚪 Sign Out (Try me)</button>
+  </nav>
+
+  <!-- MAIN DESKTOP CONTAINER -->
+  <main class="desktop-container" id="mainDesktop">
+
+    <!-- ========================================== -->
+    <!-- TAB 1: HOSTILE REGISTRATION & ONBOARDING -->
+    <!-- ========================================== -->
+    <section class="app-tab active" id="tab-registration">
+      <div class="win-panel">
+        <div class="panel-header">
+          <span>📝 Mandatory Identity Surrender & Verification Form</span>
+          <span class="badge">Security Level: Obnoxious</span>
+        </div>
+        <div class="panel-body">
+          <p class="subtitle">Please enter your exact details to access your free trial of oxygen. Fields marked with 💀 are mathematically impossible to validate.</p>
+
+          <form id="hostileForm" onsubmit="return false;">
+            <!-- NAME INPUT (Hostile split) -->
+            <div class="form-group">
+              <label>First Name (Character by Character Speedrun):</label>
+              <div class="char-picker-group">
+                <input type="text" id="nameDisplay" placeholder="Type here, but every 3rd letter is deleted" class="cursed-input">
+                <span class="char-hint" id="nameHint">0 characters entered</span>
+              </div>
+            </div>
+
+            <!-- HOSTILE PHONE NUMBER: THE 10-DIGIT RANGE SLIDER -->
+            <div class="form-group">
+              <label>Phone Number (Fine-tune with Slider from 0 to 9,999,999,999):</label>
+              <div class="slider-wrapper">
+                <input type="range" id="phoneSlider" min="1000000000" max="9999999999" value="5550199281" class="mega-slider">
+                <div class="phone-output" id="phoneDisplay">+1 (555) 019-9281</div>
+                <small class="slider-note">Tip: Use pixel-perfect 0.000001mm mouse movements to select your area code.</small>
+              </div>
+            </div>
+
+            <!-- AGE PICKER: THE KINETIC ACCUMULATOR -->
+            <div class="form-group">
+              <label>Your Exact Age in Earth Rotations:</label>
+              <div class="age-picker-row">
+                <button type="button" class="action-btn" id="ageDecrementBtn">➖ Decrement by 3.5</button>
+                <span class="age-value" id="ageDisplay">24.50</span>
+                <button type="button" class="action-btn" id="ageIncrementBtn">➕ Increment by 1.7</button>
+                <button type="button" class="action-btn gamble" id="ageRandomBtn">🎲 Age Roulette</button>
+              </div>
+            </div>
+
+            <!-- IMPOSSIBLE PASSWORD ENGINE -->
+            <div class="form-group">
+              <label>Enterprise Ultra-Secure Password:</label>
+              <div class="password-input-box">
+                <input type="password" id="passwordInput" placeholder="Prepare your soul..." class="cursed-input">
+                <button type="button" id="togglePasswordBtn" class="small-btn">👁️ Peek</button>
+              </div>
+              <div class="password-meter-container">
+                <div class="meter-bar" id="passwordStrengthBar"></div>
+                <span id="passwordStrengthLabel">Strength: Dangerously Pathological (0%)</span>
+              </div>
+              
+              <!-- DYNAMIC RULES LIST -->
+              <div class="rules-card">
+                <strong>Password Invariants (All must pass):</strong>
+                <ul class="rule-list" id="ruleList">
+                  <li id="rule-len" class="invalid">❌ Must be at least 14 characters</li>
+                  <li id="rule-prime" class="invalid">❌ Must contain at least two prime numbers (2, 3, 5, 7, 11, etc.)</li>
+                  <li id="rule-roman" class="invalid">❌ Must include Roman numerals adding up to XLII (42)</li>
+                  <li id="rule-grief" class="invalid">❌ Must contain at least one stage of grief emoji (😡, 😭, 😐,  bargaining, etc.)</li>
+                  <li id="rule-no-vowels" class="invalid">❌ Must NOT contain consecutive vowels</li>
+                  <li id="rule-byzantine" class="invalid">❌ Must mention 6th-century Emperor Justinian or Belisarius</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- AGREE TO UNREASONABLE TERMS -->
+            <div class="form-group tos-box">
+              <div class="tos-scroll-area" id="tosScrollArea">
+                <h4>TERMS OF ARBITRARY SUBMISSION (Rev 409.12)</h4>
+                <p>1. By visiting this page, you assign all copyright to your current thoughts, future daydreaming, and half of any sandwich you consume on Tuesdays to AntiOS Global Inc.</p>
+                <p>2. You agree that UI convenience is a moral failure and agree to complete 10 manual re-verifications per hour.</p>
+                <p>3. If the mouse cursor touches the screen boundary, you agree to pay a surcharge of 4 pennies directly to the server radiator fund.</p>
+                <p>4. You acknowledge that our support team is entirely comprised of an unprompted Markov chain trained on 1990s tech support forum flame wars.</p>
+                <p>5. Scroll down to bottom to prove you actually read this...</p>
+                <p style="margin-top: 150px;">Almost there... keep scrolling...</p>
+                <p style="margin-top: 200px;">Still reading? Seriously?</p>
+                <p style="margin-top: 300px; color: #ff0055; font-weight: bold;">[SECRET CLAUSE 78-B: You just agreed to donate 12 virtual paperclips.]</p>
+              </div>
+              <label class="checkbox-container">
+                <input type="checkbox" id="tosCheckbox" disabled>
+                <span class="custom-chk"></span>
+                <span id="tosLabelText">I have read all 9,000 words of the TOS (Locked until scrolled to bottom)</span>
+              </label>
+            </div>
+
+            <!-- THE UNCLICKABLE SUBMIT BUTTON -->
+            <div class="submit-arena" id="submitArena">
+              <div class="arena-warning">Move mouse toward button to finalize registration:</div>
+              <button type="button" class="runaway-button" id="runawayBtn">🚀 SUBMIT APPLICATION</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 2: THE COUNTER-PRODUCTIVE TO-DO LIST  -->
+    <!-- ========================================== -->
+    <section class="app-tab" id="tab-todo">
+      <div class="win-panel">
+        <div class="panel-header">
+          <span>📝 AntiProductive™ Automated Chore Multiplier</span>
+          <span class="badge">Tasks Remaining: ∞</span>
+        </div>
+        <div class="panel-body">
+          <p class="subtitle">Enter one task you want to do. Our proprietary AI will generate 3 complementary bureaucratic obstacles to prevent you from finishing it.</p>
+
+          <div class="todo-creator-box">
+            <input type="text" id="newTodoInput" placeholder="What are you foolishly trying to accomplish?" class="cursed-input">
+            <button class="action-btn primary" id="addTodoBtn">➕ Multiply Burden</button>
+          </div>
+
+          <div class="todo-controls-row">
+            <button class="action-btn danger" id="shuffleTodosBtn">🔀 Scramble Priorities</button>
+            <button class="action-btn warning" id="delegateAllBtn">🤖 Delegate to Intern (Deletes Random 50%)</button>
+            <button class="action-btn" id="procrastinateBtn">☕ Procrastinate All (+1 Day to Deadline)</button>
+          </div>
+
+          <!-- THE TASK LIST -->
+          <ul class="cursed-todo-list" id="todoList">
+            <!-- Initial Cursed Tasks -->
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 3: SETTINGS & DISPLAY PREFERENCES     -->
+    <!-- ========================================== -->
+    <section class="app-tab" id="tab-settings">
+      <div class="win-panel">
+        <div class="panel-header">
+          <span>⚙️ System Sensory Assault & Ergonomic Destruction</span>
+        </div>
+        <div class="panel-body">
+          <div class="settings-grid">
+
+            <!-- THEME SWITCHER -->
+            <div class="setting-card">
+              <h4>🎨 Visual Aesthetic Disasters</h4>
+              <p>Pick the visual palette that causes the most ocular strain:</p>
+              <div class="theme-buttons">
+                <button class="theme-btn active" data-theme="theme-geocities">🔥 1999 GeoCities Fire</button>
+                <button class="theme-btn" data-theme="theme-windows95">🪟 Windows 95 Corporate Gray</button>
+                <button class="theme-btn" data-theme="theme-cyberpunk">⚡ High-Voltage Eye-Burn</button>
+                <button class="theme-btn" data-theme="theme-stealth">🕶️ Stealth Navy (Unreadable)</button>
+                <button class="theme-btn" data-theme="theme-comic">🤡 100% Comic Sans Royale</button>
+              </div>
+            </div>
+
+            <!-- CURSOR DYNAMICS -->
+            <div class="setting-card">
+              <h4>🖱️ Cursor Ergonomics</h4>
+              <p>Standard cursors are too predictable. Choose your handicap:</p>
+              <div class="setting-toggle-group">
+                <label><input type="checkbox" id="cursorLagToggle" checked> Artificial Cursor Inertia & Lag (300ms)</label>
+                <label><input type="checkbox" id="screenTiltToggle"> Kinetic Screen Tilt on Mouse Move</label>
+                <label><input type="checkbox" id="jitterToggle"> Micro-Tremor Earthquakes when Typing</label>
+              </div>
+            </div>
+
+            <!-- HOSTILE VOLUME CONTROLLER -->
+            <div class="setting-card">
+              <h4>🔊 Volume Calibration from Hell</h4>
+              <p>Volume controls where 0% is max volume, and 100% is also max volume:</p>
+              <div class="volume-slider-box">
+                <input type="range" id="hostileVolume" min="0" max="100" value="50" class="mega-slider">
+                <div class="vol-label" id="volDisplay">Actual Volume: 140dB (Harmonic Resonance)</div>
+                <button class="action-btn" id="testToneBtn">🎵 Play Ear Calibration Frequency</button>
+              </div>
+            </div>
+
+            <!-- RAM & RESOURCE THUMBSCREWS -->
+            <div class="setting-card">
+              <h4>💾 System Resource Allocation</h4>
+              <p>Simulate obsolete hardware limitations:</p>
+              <div class="ram-download-box">
+                <div class="progress-container">
+                  <div class="progress-bar-fill" id="ramProgress" style="width: 32%;"></div>
+                </div>
+                <div class="ram-status" id="ramStatusText">Virtual RAM Downloaded: 32% (24KB / 64KB)</div>
+                <button class="action-btn primary" id="downloadRamBtn">⬇️ Download More Virtual RAM</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 4: KARENGPT AI CUSTOMER SUPPORT       -->
+    <!-- ========================================== -->
+    <section class="app-tab" id="tab-support">
+      <div class="win-panel">
+        <div class="panel-header">
+          <span>🤖 KarenGPT™ Enterprise Automated Defensive Support</span>
+          <span class="badge online">Status: Irritated</span>
+        </div>
+        <div class="panel-body support-chat-body">
+          <div class="chat-meta">
+            <span>Agent: <strong>Karen-9000 (Senior Escalation Denier)</strong></span>
+            <span>Current Hold Time: <strong>487 Hours</strong></span>
+          </div>
+
+          <div class="chat-messages" id="chatMessages">
+            <div class="chat-msg bot">
+              <span class="avatar">🤖</span>
+              <div class="bubble">
+                Hello. What did you do wrong this time? Whatever it is, I can assure you it violates section 9 of your license and is strictly your fault.
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-input-bar">
+            <input type="text" id="chatInput" placeholder="Express your futile grievance..." class="cursed-input">
+            <button class="action-btn danger" id="chatSendBtn">Send Grievance</button>
+            <button class="action-btn" id="askManagerBtn">🚨 Demand to Speak with Manager</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- BIPPY THE TOXIC PAPERCLIP ASSISTANT        -->
+  <!-- ========================================== -->
+  <div class="bippy-container" id="bippyWidget">
+    <div class="bippy-bubble" id="bippyBubble">
+      <p id="bippyText">Hi! I'm Bippy! It looks like you're trying to achieve something. Have you tried giving up instead?</p>
+      <div class="bippy-actions">
+        <button class="bippy-btn" id="bippyAnnoyBtn">Insult Me More</button>
+        <button class="bippy-btn close" id="bippyCloseBtn">Dismiss (Don't Click)</button>
+      </div>
+    </div>
+    <div class="bippy-avatar" id="bippyAvatar">
+      📎
+      <div class="bippy-eyes">👀</div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- THE AGGRESSIVE COOKIE HOSTAGE BANNER       -->
+  <!-- ========================================== -->
+  <div class="cookie-hostage-banner" id="cookieBanner">
+    <div class="cookie-header">
+      <span>🍪 WE VALUE YOUR PERSONAL SOUL AND TRACKING COOKIES</span>
+      <span class="cookie-count">Partner Ad Trackers: 5,491</span>
+    </div>
+    <div class="cookie-body">
+      We use cookies, telemetry, brainwave harmonics, and ultrasonic browser beacons to ensure you never experience an uninterrupted browsing session. By existing, you accept our standard terms.
+    </div>
+    <div class="cookie-actions">
+      <button class="action-btn primary huge" id="acceptAllCookiesBtn">ACCEPT ALL 5,491 COOKIES & GIVE HOUSE KEYS</button>
+      <button class="action-btn secondary" id="customCookieBtn">Manage Partners Individually (5,491 checkboxes)</button>
+      <button class="sneaky-reject-btn" id="rejectCookiesBtn">reject (0.001px)</button>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: THE CAPTCHA OF EXISTENTIAL DREAD    -->
+  <!-- ========================================== -->
+  <div class="modal-overlay hidden" id="captchaModal">
+    <div class="modal-window">
+      <div class="modal-header">
+        <span>🤖 Biometric Verification: Prove You Are Human</span>
+        <button class="close-x" id="closeCaptchaBtn">✕</button>
+      </div>
+      <div class="modal-content">
+        <div class="captcha-prompt" id="captchaPromptText">
+          Select all images that contain: <strong>"Unresolved Mid-Career Anxiety"</strong>
+        </div>
+        <div class="captcha-grid" id="captchaGrid">
+          <!-- 9 cursed tiles dynamically populated -->
+        </div>
+        <div class="captcha-timer">
+          Time remaining before verification invalidation: <span id="captchaTimerText">0:07</span>
+        </div>
+        <div class="modal-footer">
+          <button class="action-btn danger" id="verifyCaptchaBtn">Verify & Confess</button>
+          <button class="action-btn" id="reloadCaptchaBtn">🔄 New Existential Crisis</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: BOSS KEY (FAKE EXCEL SPREADSHEET)   -->
+  <!-- ========================================== -->
+  <div class="boss-overlay hidden" id="bossOverlay">
+    <div class="fake-excel">
+      <div class="excel-ribbon">
+        <span>File</span><span>Home</span><span>Insert</span><span>Formulas</span><span>Synergy™</span>
+      </div>
+      <div class="excel-formula-bar">
+        <span>fx</span>
+        <input type="text" value="=SUM(Q4_PROCRASTINATION * SYNERGY_COEFFICIENT) / COFFEE_INTAKE" readonly>
+      </div>
+      <div class="excel-sheet">
+        <table class="excel-table">
+          <thead>
+            <tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Quarterly Synergy</td><td>\$49,201.00</td><td>CONFIDENTIAL</td><td>High</td><td>94.2%</td></tr>
+            <tr><td>2</td><td>Chicken Nugget Budget</td><td>\$18,400.00</td><td>APPROVED</td><td>Critical</td><td>100.0%</td></tr>
+            <tr><td>3</td><td>Actual Work Done</td><td>\$0.00</td><td>PENDING AUDIT</td><td>Zero</td><td>0.0%</td></tr>
+            <tr><td>4</td><td>Pretending to Type</td><td>9,481 hrs</td><td>OPTIMAL</td><td>High</td><td>99.9%</td></tr>
+            <tr><td>5</td><td>Manager Awareness</td><td>0.01%</td><td>STABLE</td><td>Low</td><td>1.0%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="excel-footer">
+        Sheet1 | [Press Esc to return to AntiOS chaos]
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="audio.js"></script>
+  <script src="bippy.js"></script>
+  <script src="forms.js"></script>
+  <script src="todo.js"></script>
+  <script src="support.js"></script>
+  <script src="brainrot.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
