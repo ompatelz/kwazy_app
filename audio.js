@@ -465,6 +465,169 @@ class AntiAudioEngine {
     this.bgmPlaying = false;
     if (this.bgmTimer) clearTimeout(this.bgmTimer);
   }
+  // Seductive / Freaky Sine Slide with Vibrato LFO
+  playFreakySlide() {
+    if (!this.soundEnabled || !this.ctx) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const lfo = this.ctx.createOscillator();
+    const lfoGain = this.ctx.createGain();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(320, now);
+    osc.frequency.exponentialRampToValueAtTime(580, now + 0.35);
+    osc.frequency.exponentialRampToValueAtTime(440, now + 0.7);
+
+    // Vibrato
+    lfo.type = 'sine';
+    lfo.frequency.setValueAtTime(6.5, now);
+    lfoGain.gain.setValueAtTime(18, now);
+    lfo.connect(osc.frequency);
+
+    gain.gain.setValueAtTime(0.01, now);
+    gain.gain.linearRampToValueAtTime(0.28, now + 0.1);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.7);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    lfo.start(now);
+    osc.start(now);
+    lfo.stop(now + 0.7);
+    osc.stop(now + 0.7);
+  }
+
+  // Moist / Freaky Squelch
+  playFreakySquelch() {
+    if (!this.soundEnabled || !this.ctx) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const filter = this.ctx.createBiquadFilter();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(160, now);
+    osc.frequency.exponentialRampToValueAtTime(45, now + 0.2);
+
+    filter.type = 'bandpass';
+    filter.Q.setValueAtTime(9, now);
+    filter.frequency.setValueAtTime(1400, now);
+    filter.frequency.exponentialRampToValueAtTime(180, now + 0.2);
+
+    gain.gain.setValueAtTime(0.35, now);
+    gain.gain.exponentialRampToValueAtTime(0.005, now + 0.2);
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.2);
+  }
+
+  // Sultry 80s Saxophone Riff (Careless Whisper style)
+  playCarelessWhisperSax() {
+    if (!this.soundEnabled || !this.ctx) return;
+    const notes = [
+      { f: 587.33, d: 0.22 }, // D5
+      { f: 523.25, d: 0.18 }, // C5
+      { f: 466.16, d: 0.28 }, // Bb4
+      { f: 440.00, d: 0.65 }  // A4
+    ];
+    let offset = 0;
+    const startTime = this.ctx.currentTime;
+
+    notes.forEach((n, idx) => {
+      const t = startTime + offset;
+      const osc = this.ctx.createOscillator();
+      const vibrato = this.ctx.createOscillator();
+      const vibGain = this.ctx.createGain();
+      const filter = this.ctx.createBiquadFilter();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(n.f, t);
+
+      vibrato.frequency.setValueAtTime(5.8, t);
+      vibGain.gain.setValueAtTime(n.d > 0.3 ? 12 : 4, t);
+      vibrato.connect(osc.frequency);
+
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(1200, t);
+      filter.Q.setValueAtTime(3, t);
+
+      gain.gain.setValueAtTime(0.01, t);
+      gain.gain.linearRampToValueAtTime(0.2, t + 0.04);
+      gain.gain.setValueAtTime(0.18, t + n.d * 0.7);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + n.d);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      vibrato.start(t);
+      osc.start(t);
+      vibrato.stop(t + n.d);
+      osc.stop(t + n.d);
+
+      offset += n.d * 0.85;
+    });
+  }
+
+  // Procedural Comedic Moan / Seductive Sigh
+  playMoan() {
+    if (!this.soundEnabled || !this.ctx) return;
+    const now = this.ctx.currentTime;
+    const osc1 = this.ctx.createOscillator();
+    const osc2 = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc1.type = 'sine';
+    osc2.type = 'triangle';
+
+    // Downward vocal slide
+    osc1.frequency.setValueAtTime(340, now);
+    osc1.frequency.exponentialRampToValueAtTime(160, now + 0.55);
+
+    osc2.frequency.setValueAtTime(680, now);
+    osc2.frequency.exponentialRampToValueAtTime(320, now + 0.55);
+
+    gain.gain.setValueAtTime(0.01, now);
+    gain.gain.linearRampToValueAtTime(0.25, now + 0.12);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+
+    osc1.connect(gain);
+    osc2.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc1.start(now);
+    osc2.start(now);
+    osc1.stop(now + 0.55);
+    osc2.stop(now + 0.55);
+  }
+
+  // Lip Smack / Kiss sound
+  playKiss() {
+    if (!this.soundEnabled || !this.ctx) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(800, now);
+    osc.frequency.exponentialRampToValueAtTime(2200, now + 0.05);
+    osc.frequency.exponentialRampToValueAtTime(400, now + 0.12);
+
+    gain.gain.setValueAtTime(0.22, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.12);
+  }
 }
 
 const soundEngine = new AntiAudioEngine();
