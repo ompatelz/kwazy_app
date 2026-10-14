@@ -13,9 +13,9 @@ class BrainrotEngine {
 
   init() {
     this.createAuraWidget();
-    this.createParkourCanvas();
-    this.createAsmrSoapCanvas();
     this.createFamilyGuyCanvas();
+    this.createAsmrSoapCanvas();
+    this.createParkourCanvas();
     this.initEmojiCursorTrail();
     this.scheduleHostilePopups();
     this.initWheelOfPain();
@@ -89,20 +89,168 @@ class BrainrotEngine {
     }, 1200);
   }
 
+  // Brainrot Multi-Stimulator Dock: Unified Minimizable & Draggable Dock
+  getOrCreateStimulatorDock() {
+    let dock = document.getElementById('stimulatorDock');
+    if (!dock) {
+      dock = document.createElement('div');
+      dock.id = 'stimulatorDock';
+      dock.className = 'stimulator-dock-container';
+      dock.innerHTML = `
+        <div class="stimulator-dock-header">
+          <div class="dock-title">
+            <span>🧠 BRAINROT MULTI-STIMULATOR DOCK</span>
+          </div>
+          <div class="dock-actions">
+            <button type="button" class="stim-dock-btn minimize" id="stimDockMinBtn" title="Minimize/Restore All Stimulators">_</button>
+            <button type="button" class="stim-dock-btn close" id="stimDockCloseBtn" title="Dismiss Stimulators">✕</button>
+          </div>
+        </div>
+        <div class="stimulator-dock-body" id="stimulatorDockBody"></div>
+      `;
+      document.body.appendChild(dock);
+
+      const minBtn = dock.querySelector('#stimDockMinBtn');
+      const closeBtn = dock.querySelector('#stimDockCloseBtn');
+      const header = dock.querySelector('.stimulator-dock-header');
+
+      const toggleDockMinimize = (e) => {
+        if (e) e.stopPropagation();
+        const isMin = dock.classList.toggle('is-minimized');
+        if (isMin) {
+          minBtn.innerText = '🗗';
+          minBtn.title = 'Restore Stimulators';
+          if (window.soundEngine) window.soundEngine.playBoing();
+        } else {
+          minBtn.innerText = '_';
+          minBtn.title = 'Minimize Stimulators';
+          if (window.soundEngine) window.soundEngine.playDing();
+        }
+      };
+
+      minBtn.addEventListener('click', toggleDockMinimize);
+      header.addEventListener('dblclick', (e) => {
+        if (e.target.closest('button')) return;
+        toggleDockMinimize(e);
+      });
+
+      if (closeBtn) {
+        closeBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (window.soundEngine) window.soundEngine.playBuzzer();
+          alert("❌ Stimulator Dismissal Denied: Mandatory dopamine stimulation required. Minimizing instead.");
+          toggleDockMinimize();
+        });
+      }
+
+      // Dragging support for Stimulator Dock
+      let isDragging = false;
+      let startPointerX = 0, startPointerY = 0;
+      let startDockX = 0, startDockY = 0;
+
+      const onPointerDown = (e) => {
+        if (e.button !== undefined && e.button !== 0) return;
+        if (e.target.closest('button')) return;
+
+        isDragging = true;
+        dock.classList.add('is-dragging');
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        startPointerX = clientX;
+        startPointerY = clientY;
+        startDockX = parseFloat(dock.dataset.x || 0);
+        startDockY = parseFloat(dock.dataset.y || 0);
+
+        window.addEventListener('mousemove', onPointerMove, { passive: false });
+        window.addEventListener('mouseup', onPointerUp);
+        window.addEventListener('touchmove', onPointerMove, { passive: false });
+        window.addEventListener('touchend', onPointerUp);
+        window.addEventListener('touchcancel', onPointerUp);
+        e.preventDefault();
+      };
+
+      const onPointerMove = (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        const dx = clientX - startPointerX;
+        const dy = clientY - startPointerY;
+        const newX = startDockX + dx;
+        const newY = startDockY + dy;
+        dock.dataset.x = newX;
+        dock.dataset.y = newY;
+        dock.style.transform = `translate3d(${newX}px, ${newY}px, 0)`;
+      };
+
+      const onPointerUp = () => {
+        if (!isDragging) return;
+        isDragging = false;
+        dock.classList.remove('is-dragging');
+        window.removeEventListener('mousemove', onPointerMove);
+        window.removeEventListener('mouseup', onPointerUp);
+        window.removeEventListener('touchmove', onPointerMove);
+        window.removeEventListener('touchend', onPointerUp);
+        window.removeEventListener('touchcancel', onPointerUp);
+        if (window.soundEngine) window.soundEngine.playClick();
+      };
+
+      header.addEventListener('mousedown', onPointerDown);
+      header.addEventListener('touchstart', onPointerDown, { passive: false });
+    }
+    return dock;
+  }
+
+  setupSubWidgetMinimize(box) {
+    const header = box.querySelector('.parkour-header');
+    if (!header) return;
+    const minBtn = header.querySelector('.stim-mini-btn');
+    if (!minBtn) return;
+
+    const toggle = (e) => {
+      if (e) e.stopPropagation();
+      const isMin = box.classList.toggle('is-widget-minimized');
+      minBtn.innerText = isMin ? '🗗' : '_';
+      minBtn.title = isMin ? 'Restore Stimulator' : 'Minimize Stimulator';
+      if (window.soundEngine) {
+        if (isMin) window.soundEngine.playBoing();
+        else window.soundEngine.playDing();
+      }
+    };
+
+    minBtn.addEventListener('click', toggle);
+    header.addEventListener('dblclick', (e) => {
+      if (e.target.closest('button')) return;
+      toggle(e);
+    });
+  }
+
   // 2. Attention Span Preserver: Mini Parkour Runner Canvas
   createParkourCanvas() {
+    this.getOrCreateStimulatorDock();
+    const dockBody = document.getElementById('stimulatorDockBody');
+
     const parkourBox = document.createElement('div');
     parkourBox.id = 'parkourWidget';
     parkourBox.className = 'parkour-widget-box';
     parkourBox.innerHTML = `
       <div class="parkour-header">
         <span>🎮 ATTENTION SPAN PRESERVER (SUBWAY PARKOUR)</span>
-        <button class="parkour-mini-btn" id="parkourMuteBtn">🔇</button>
+        <div class="stim-actions">
+          <button class="parkour-mini-btn" id="parkourMuteBtn">🔇</button>
+          <button class="stim-mini-btn" id="parkourMinBtn" title="Minimize Stimulator">_</button>
+        </div>
       </div>
       <canvas id="parkourCanvas" width="220" height="120"></canvas>
       <div class="parkour-caption">Never lose focus! Parkour gameplay active.</div>
     `;
-    document.body.appendChild(parkourBox);
+    if (dockBody) {
+      dockBody.appendChild(parkourBox);
+    } else {
+      document.body.appendChild(parkourBox);
+    }
+    this.setupSubWidgetMinimize(parkourBox);
 
     const canvas = document.getElementById('parkourCanvas');
     if (!canvas) return;
@@ -377,16 +525,27 @@ class BrainrotEngine {
 
   // 7. Second Brainrot Split-Screen: Kinetic Sand / Soap Cutting ASMR Simulator
   createAsmrSoapCanvas() {
+    this.getOrCreateStimulatorDock();
+    const dockBody = document.getElementById('stimulatorDockBody');
+
     const asmrBox = document.createElement('div');
     asmrBox.className = 'asmr-widget-box';
     asmrBox.innerHTML = `
       <div class="parkour-header">
         <span>🧼 SECONDARY STIMULATOR: SOAP CUTTING ASMR</span>
+        <div class="stim-actions">
+          <button class="stim-mini-btn" id="asmrMinBtn" title="Minimize Stimulator">_</button>
+        </div>
       </div>
       <canvas id="asmrCanvas" width="220" height="90"></canvas>
       <div class="parkour-caption">Satisfaction guaranteed. Brain cells decaying.</div>
     `;
-    document.body.appendChild(asmrBox);
+    if (dockBody) {
+      dockBody.appendChild(asmrBox);
+    } else {
+      document.body.appendChild(asmrBox);
+    }
+    this.setupSubWidgetMinimize(asmrBox);
 
     const canvas = document.getElementById('asmrCanvas');
     if (!canvas) return;
@@ -695,16 +854,27 @@ class BrainrotEngine {
 
   // 12. Tertiary Stimulator: 8-Bit Peter Griffin Dancing Canvas
   createFamilyGuyCanvas() {
+    this.getOrCreateStimulatorDock();
+    const dockBody = document.getElementById('stimulatorDockBody');
+
     const famBox = document.createElement('div');
     famBox.className = 'family-guy-widget-box';
     famBox.innerHTML = `
       <div class="parkour-header">
         <span>🕺 TERTIARY STIMULATOR: FAMILY GUY CLIP</span>
+        <div class="stim-actions">
+          <button class="stim-mini-btn" id="famMinBtn" title="Minimize Stimulator">_</button>
+        </div>
       </div>
       <canvas id="famCanvas" width="220" height="90"></canvas>
       <div class="parkour-caption">Attention retention at 300%. Dopamine max.</div>
     `;
-    document.body.appendChild(famBox);
+    if (dockBody) {
+      dockBody.appendChild(famBox);
+    } else {
+      document.body.appendChild(famBox);
+    }
+    this.setupSubWidgetMinimize(famBox);
 
     const canvas = document.getElementById('famCanvas');
     if (!canvas) return;

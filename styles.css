@@ -1436,28 +1436,190 @@ body.earthquake {
   100% { transform: translate(-50%, -60px) scale(0.8); opacity: 0; }
 }
 
-/* ATTENTION SPAN PRESERVER (PARKOUR WIDGET) */
-.parkour-widget-box {
+/* =========================================================
+   BRAINROT MULTI-STIMULATOR DOCK (MINIMIZABLE & DRAGGABLE)
+   ========================================================= */
+.stimulator-dock-container {
   position: fixed;
-  bottom: 20px;
-  left: 20px;
-  background: #000;
-  border: 3px ridge #ffcc00;
-  padding: 6px;
+  bottom: 14px;
+  left: 14px;
+  width: 248px;
+  background: #000000;
+  border: 3px ridge #ff0055;
+  box-shadow: 4px 6px 18px rgba(0, 0, 0, 0.75);
   z-index: 9998;
-  box-shadow: 4px 4px 14px rgba(0,0,0,0.6);
-  width: 236px;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  will-change: transform;
+  transition: box-shadow 0.2s ease;
+}
+
+.stimulator-dock-container.is-dragging {
+  z-index: 10001 !important;
+  box-shadow: 8px 14px 30px rgba(0, 0, 0, 0.9) !important;
+}
+
+.stimulator-dock-header {
+  background: linear-gradient(90deg, #ff0055, #7928ca);
+  color: #ffffff;
+  padding: 4px 6px;
+  font-size: 10px;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: grab;
+  touch-action: none;
+  border-bottom: 2px solid #222;
+}
+
+.stimulator-dock-header:active,
+.stimulator-dock-container.is-dragging .stimulator-dock-header {
+  cursor: grabbing;
+}
+
+.dock-title {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dock-actions {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.stim-dock-btn {
+  width: 18px;
+  height: 16px;
+  background: #c0c0c0;
+  color: #000000;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 11px;
+  line-height: 12px;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 2px solid #333333;
+  border-right: 2px solid #333333;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.stim-dock-btn:hover {
+  background: #e0e0e0;
+}
+
+.stim-dock-btn:active {
+  border-top: 2px solid #333333;
+  border-left: 2px solid #333333;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+}
+
+.stim-dock-btn.close:hover {
+  background: #ff3333;
+  color: #ffffff;
+}
+
+.stimulator-dock-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px;
+  max-height: 540px;
+  overflow-y: auto;
+}
+
+.stimulator-dock-container.is-minimized .stimulator-dock-body {
+  display: none !important;
+}
+
+.stimulator-dock-container.is-minimized {
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.parkour-widget-box,
+.asmr-widget-box,
+.family-guy-widget-box {
+  position: static !important;
+  bottom: auto !important;
+  left: auto !important;
+  width: 100% !important;
+  box-sizing: border-box;
+  background: #000;
+  padding: 5px;
+  box-shadow: none !important;
+  z-index: 1 !important;
+}
+
+.family-guy-widget-box {
+  border: 2px ridge #00ffff !important;
+}
+
+.asmr-widget-box {
+  border: 2px ridge #ff00ff !important;
+}
+
+.parkour-widget-box {
+  border: 2px ridge #ffcc00 !important;
 }
 
 .parkour-header {
-  color: #ffcc00;
   font-size: 9px;
   font-weight: bold;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
   font-family: monospace;
+  cursor: pointer;
+}
+
+.stim-actions {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.stim-mini-btn {
+  background: #333;
+  color: #fff;
+  border: 1px solid #777;
+  font-size: 9px;
+  line-height: 11px;
+  padding: 1px 4px;
+  cursor: pointer;
+}
+
+.stim-mini-btn:hover {
+  background: #555;
+  color: #ffff00;
+}
+
+.family-guy-widget-box.is-widget-minimized canvas,
+.family-guy-widget-box.is-widget-minimized .parkour-caption,
+.asmr-widget-box.is-widget-minimized canvas,
+.asmr-widget-box.is-widget-minimized .parkour-caption,
+.parkour-widget-box.is-widget-minimized canvas,
+.parkour-widget-box.is-widget-minimized .parkour-caption {
+  display: none !important;
+}
+
+.family-guy-widget-box.is-widget-minimized,
+.asmr-widget-box.is-widget-minimized,
+.parkour-widget-box.is-widget-minimized {
+  padding-bottom: 3px;
 }
 
 .parkour-mini-btn {
@@ -1542,18 +1704,7 @@ body.earthquake {
   background: #ffffcc;
 }
 
-/* ASMR SOAP CUTTING SPLIT SCREEN */
-.asmr-widget-box {
-  position: fixed;
-  bottom: 200px;
-  left: 20px;
-  background: #000;
-  border: 3px ridge #ff00ff;
-  padding: 6px;
-  z-index: 9998;
-  box-shadow: 4px 4px 14px rgba(0,0,0,0.6);
-  width: 236px;
-}
+
 
 /* POLICE SPEEDING TICKET SIRENS */
 body.police-sirens {
@@ -1640,18 +1791,7 @@ body.police-sirens {
   color: #ff0000;
 }
 
-/* TERTIARY STIMULATOR: 8-BIT PETER GRIFFIN DANCE */
-.family-guy-widget-box {
-  position: fixed;
-  bottom: 310px;
-  left: 20px;
-  background: #000;
-  border: 3px ridge #00ffff;
-  padding: 6px;
-  z-index: 9998;
-  box-shadow: 4px 4px 14px rgba(0,0,0,0.6);
-  width: 236px;
-}
+
 
 /* BIPPY BOSS FIGHT OVERDRIVE */
 .bippy-avatar.boss-mode {
