@@ -26,7 +26,7 @@
 /* 1. 1999 GEOCITIES FIRE THEME */
 body.theme-geocities {
   --bg-primary: #12001a;
-  --panel-bg: #ffff00;
+  --panel-bg: rgba(255, 255, 0, 0.92);
   --panel-border-light: #ff00ff;
   --panel-border-dark: #00ffff;
   --accent-color: #ff0000;
@@ -34,13 +34,12 @@ body.theme-geocities {
   --font-family: 'Comic Sans MS', 'Comic Neue', cursive;
   --header-grad-1: #ff0000;
   --header-grad-2: #ff7700;
-  background: radial-gradient(circle, #330033 0%, #000000 100%);
 }
 
 /* 2. WINDOWS 95 RETRO */
 body.theme-windows95 {
   --bg-primary: #008080;
-  --panel-bg: #c0c0c0;
+  --panel-bg: rgba(192, 192, 192, 0.92);
   --panel-border-light: #ffffff;
   --panel-border-dark: #808080;
   --accent-color: #000080;
@@ -48,13 +47,12 @@ body.theme-windows95 {
   --font-family: Tahoma, 'MS Sans Serif', sans-serif;
   --header-grad-1: #000080;
   --header-grad-2: #1084d0;
-  background-color: #008080;
 }
 
 /* 3. HIGH-VOLTAGE CYBERPUNK EYE-BURN */
 body.theme-cyberpunk {
   --bg-primary: #ff007f;
-  --panel-bg: #00ffff;
+  --panel-bg: rgba(0, 255, 255, 0.9);
   --panel-border-light: #ffff00;
   --panel-border-dark: #ff0055;
   --accent-color: #ffff00;
@@ -62,13 +60,12 @@ body.theme-cyberpunk {
   --font-family: 'VT323', monospace;
   --header-grad-1: #ff007f;
   --header-grad-2: #7928ca;
-  background: repeating-linear-gradient(45deg, #2b0036, #2b0036 10px, #ff007f 10px, #ff007f 20px);
 }
 
 /* 4. STEALTH NAVY (UNREADABLE ZERO CONTRAST) */
 body.theme-stealth {
   --bg-primary: #050b14;
-  --panel-bg: #08111e;
+  --panel-bg: rgba(8, 17, 30, 0.92);
   --panel-border-light: #0d1b2a;
   --panel-border-dark: #020509;
   --accent-color: #112233;
@@ -76,25 +73,23 @@ body.theme-stealth {
   --font-family: sans-serif;
   --header-grad-1: #060e1a;
   --header-grad-2: #091524;
-  background-color: #03060a;
 }
 
 /* 5. COMIC SANS ROYALE */
 body.theme-comic {
   --bg-primary: #ffdddd;
-  --panel-bg: #ffe6ff;
+  --panel-bg: rgba(255, 230, 255, 0.92);
   --panel-border-light: #ff99ff;
   --panel-border-dark: #cc00cc;
   --accent-color: #ff0066;
   --text-main: #330033;
   --font-family: 'Comic Sans MS', cursive;
-  background: repeating-radial-gradient(circle, #ffccff, #ffccff 20px, #ffffcc 20px, #ffffcc 40px);
 }
 
 /* 6. 𝓯𝓻𝓮𝓪𝓴𝔂 MOIST VELVET */
 body.theme-freaky {
   --bg-primary: #ffe4e6;
-  --panel-bg: #fff0f5;
+  --panel-bg: rgba(255, 240, 245, 0.92);
   --panel-border-light: #fbcfe8;
   --panel-border-dark: #f43f5e;
   --panel-border-deep: #881337;
@@ -103,8 +98,6 @@ body.theme-freaky {
   --font-family: 'Brush Script MT', 'Lucida Calligraphy', 'Comic Sans MS', cursive;
   --header-grad-1: #e11d48;
   --header-grad-2: #be123c;
-  background: radial-gradient(circle at center, #ffe4e6 0%, #f43f5e 50%, #881337 100%);
-  background-attachment: fixed;
 }
 
 body.theme-freaky .win-panel,
@@ -120,7 +113,7 @@ body.theme-freaky .freaky-card {
 }
 
 /* =========================================================
-   BASE RESET & LAYOUT
+   BASE RESET & LAYOUT - MAID CAFE UNIVERSAL BACKGROUND
    ========================================================= */
 * {
   box-sizing: border-box;
@@ -137,6 +130,25 @@ html, body {
   overflow-x: hidden;
   position: relative;
   transition: transform 0.15s ease-out;
+  background-image: url('maid_bg.jpg') !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+  background-size: cover !important;
+  background-color: #ffe4e6;
+}
+
+body.theme-geocities,
+body.theme-windows95,
+body.theme-cyberpunk,
+body.theme-stealth,
+body.theme-comic,
+body.theme-freaky {
+  background-image: url('maid_bg.jpg') !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+  background-size: cover !important;
 }
 
 /* Kinetic Screen Tilt feature */
@@ -353,6 +365,7 @@ body.earthquake {
   border-bottom: 3px solid var(--panel-border-deep);
   box-shadow: 3px 3px 12px rgba(0,0,0,0.4);
   margin-bottom: 20px;
+  backdrop-filter: blur(2px);
 }
 
 .panel-header {
