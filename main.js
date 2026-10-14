@@ -57,7 +57,182 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // 4. Window Minimise/Close buttons
+  // 4. Draggable and Minimizable Windows System
+  let highestZ = 100;
+
+  function initDraggableWindows() {
+    const panels = document.querySelectorAll('.win-panel');
+
+    panels.forEach((panel) => {
+      const header = panel.querySelector('.panel-header');
+      if (!header) return;
+
+      // Ensure header actions exist
+      let actions = header.querySelector('.panel-header-actions');
+      if (!actions) {
+        actions = document.createElement('div');
+        actions.className = 'panel-header-actions';
+        actions.innerHTML = `
+          <button type="button" class="panel-win-btn minimize" title="Minimize Window">_</button>
+          <button type="button" class="panel-win-btn maximize" title="Maximize Window">🗖</button>
+          <button type="button" class="panel-win-btn close" title="Close Window">✕</button>
+        `;
+        header.appendChild(actions);
+      }
+
+      const minBtn = actions.querySelector('.panel-win-btn.minimize');
+      const maxBtn = actions.querySelector('.panel-win-btn.maximize');
+      const closeBtn = actions.querySelector('.panel-win-btn.close');
+
+      // Toggle minimize helper
+      function toggleMinimize(e) {
+        if (e) e.stopPropagation();
+        const isMin = panel.classList.toggle('is-minimized');
+        if (isMin) {
+          if (panel.classList.contains('is-maximized')) {
+            panel.classList.remove('is-maximized');
+            if (maxBtn) maxBtn.innerText = '🗖';
+          }
+          if (minBtn) {
+            minBtn.innerText = '🗗';
+            minBtn.title = 'Restore Window';
+          }
+          if (window.soundEngine) window.soundEngine.playBoing();
+        } else {
+          if (minBtn) {
+            minBtn.innerText = '_';
+            minBtn.title = 'Minimize Window';
+          }
+          if (window.soundEngine) window.soundEngine.playDing();
+        }
+      }
+
+      // Toggle maximize helper
+      function toggleMaximize(e) {
+        if (e) e.stopPropagation();
+        if (panel.classList.contains('is-minimized')) {
+          panel.classList.remove('is-minimized');
+          if (minBtn) minBtn.innerText = '_';
+        }
+        const isMax = panel.classList.toggle('is-maximized');
+        if (isMax) {
+          if (maxBtn) {
+            maxBtn.innerText = '🗗';
+            maxBtn.title = 'Restore Down';
+          }
+          if (window.soundEngine) window.soundEngine.playDing();
+        } else {
+          if (maxBtn) {
+            maxBtn.innerText = '🗖';
+            maxBtn.title = 'Maximize Window';
+          }
+          if (window.soundEngine) window.soundEngine.playBoing();
+        }
+      }
+
+      if (minBtn) {
+        minBtn.addEventListener('click', toggleMinimize);
+      }
+
+      if (maxBtn) {
+        maxBtn.addEventListener('click', toggleMaximize);
+      }
+
+      if (closeBtn) {
+        closeBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (window.soundEngine) window.soundEngine.playBuzzer();
+          alert("❌ Access Denied: AntiOS strictly forbids window closing. Minimizing to background instead.");
+          toggleMinimize();
+        });
+      }
+
+      // Double-click on header to toggle minimize/restore
+      header.addEventListener('dblclick', (e) => {
+        if (e.target.closest('button, input, select, textarea, a')) return;
+        toggleMinimize(e);
+      });
+
+      // Bring to front on mousedown
+      panel.addEventListener('mousedown', () => {
+        highestZ += 2;
+        panel.style.zIndex = highestZ;
+      });
+
+      // Dragging logic
+      let isDragging = false;
+      let startPointerX = 0;
+      let startPointerY = 0;
+      let startPanelX = 0;
+      let startPanelY = 0;
+
+      function onPointerDown(e) {
+        if (e.button !== undefined && e.button !== 0) return;
+        if (e.target.closest('button, input, select, textarea, a, .panel-win-btn')) return;
+        if (panel.classList.contains('is-maximized')) return;
+
+        isDragging = true;
+        panel.classList.add('is-dragging');
+        highestZ += 2;
+        panel.style.zIndex = highestZ;
+
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        startPointerX = clientX;
+        startPointerY = clientY;
+
+        startPanelX = parseFloat(panel.dataset.x || 0);
+        startPanelY = parseFloat(panel.dataset.y || 0);
+
+        window.addEventListener('mousemove', onPointerMove, { passive: false });
+        window.addEventListener('mouseup', onPointerUp);
+        window.addEventListener('touchmove', onPointerMove, { passive: false });
+        window.addEventListener('touchend', onPointerUp);
+        window.addEventListener('touchcancel', onPointerUp);
+        e.preventDefault();
+      }
+
+      function onPointerMove(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        const dx = clientX - startPointerX;
+        const dy = clientY - startPointerY;
+
+        const newX = startPanelX + dx;
+        const newY = startPanelY + dy;
+
+        panel.dataset.x = newX;
+        panel.dataset.y = newY;
+        panel.style.transform = `translate3d(${newX}px, ${newY}px, 0)`;
+      }
+
+      function onPointerUp() {
+        if (!isDragging) return;
+        isDragging = false;
+        panel.classList.remove('is-dragging');
+
+        window.removeEventListener('mousemove', onPointerMove);
+        window.removeEventListener('mouseup', onPointerUp);
+        window.removeEventListener('touchmove', onPointerMove);
+        window.removeEventListener('touchend', onPointerUp);
+        window.removeEventListener('touchcancel', onPointerUp);
+
+        if (window.soundEngine) window.soundEngine.playClick();
+      }
+
+      header.addEventListener('mousedown', onPointerDown);
+      header.addEventListener('touchstart', onPointerDown, { passive: false });
+    });
+  }
+
+  initDraggableWindows();
+
+  // Top OS Bar controls
   const minimizeBtn = document.getElementById('minimizeBtn');
   const maximizeBtn = document.getElementById('maximizeBtn');
   const closeWinBtn = document.getElementById('closeWinBtn');
@@ -65,16 +240,30 @@ document.addEventListener('DOMContentLoaded', () => {
   if (minimizeBtn) {
     minimizeBtn.addEventListener('click', () => {
       if (window.soundEngine) window.soundEngine.playBoing();
-      document.body.style.transform = 'scale(0.85)';
-      setTimeout(() => document.body.style.transform = '', 1000);
+      const activePanel = document.querySelector('.app-tab.active .win-panel');
+      if (activePanel) {
+        const minBtn = activePanel.querySelector('.panel-win-btn.minimize');
+        if (minBtn) {
+          minBtn.click();
+        } else {
+          activePanel.classList.toggle('is-minimized');
+        }
+      }
     });
   }
 
   if (maximizeBtn) {
     maximizeBtn.addEventListener('click', () => {
       if (window.soundEngine) window.soundEngine.playDing();
-      document.body.style.transform = 'scale(1.1)';
-      setTimeout(() => document.body.style.transform = '', 1000);
+      const activePanel = document.querySelector('.app-tab.active .win-panel');
+      if (activePanel) {
+        const maxBtn = activePanel.querySelector('.panel-win-btn.maximize');
+        if (maxBtn) {
+          maxBtn.click();
+        } else {
+          activePanel.classList.toggle('is-maximized');
+        }
+      }
     });
   }
 

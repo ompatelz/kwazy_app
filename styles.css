@@ -366,17 +366,122 @@ body.earthquake {
   box-shadow: 3px 3px 12px rgba(0,0,0,0.4);
   margin-bottom: 20px;
   backdrop-filter: blur(2px);
+  position: relative;
+  will-change: transform;
+  transition: box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.win-panel.is-dragging {
+  z-index: 500 !important;
+  box-shadow: 8px 14px 30px rgba(0, 0, 0, 0.7) !important;
+  user-select: none;
+}
+
+.win-panel.is-minimized {
+  margin-bottom: 12px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.win-panel.is-minimized .panel-body {
+  display: none !important;
+}
+
+.win-panel.is-maximized {
+  position: fixed !important;
+  top: 42px !important;
+  left: 12px !important;
+  right: 12px !important;
+  bottom: 42px !important;
+  width: calc(100vw - 24px) !important;
+  max-width: none !important;
+  height: calc(100vh - 84px) !important;
+  z-index: 600 !important;
+  margin: 0 !important;
+  transform: none !important;
+  overflow-y: auto !important;
 }
 
 .panel-header {
   background: linear-gradient(90deg, var(--header-grad-1), var(--header-grad-2));
   color: #ffffff;
-  padding: 6px 12px;
+  padding: 5px 8px 5px 12px;
   font-weight: bold;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 14px;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  gap: 8px;
+}
+
+.panel-header:active,
+.win-panel.is-dragging .panel-header {
+  cursor: grabbing;
+}
+
+.panel-header-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.panel-header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.panel-win-btn {
+  width: 22px;
+  height: 20px;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 2px solid #333333;
+  border-right: 2px solid #333333;
+  font-family: 'Courier New', Courier, monospace, sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 14px;
+  cursor: pointer;
+  text-align: center;
+  color: #000000;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.panel-win-btn:hover {
+  background: #e0e0e0;
+}
+
+.panel-win-btn:active {
+  border-top: 2px solid #333333;
+  border-left: 2px solid #333333;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding-top: 1px;
+  padding-left: 1px;
+}
+
+.panel-win-btn.close {
+  background: #c0c0c0;
+}
+
+.panel-win-btn.close:hover {
+  background: #e81123;
+  color: #ffffff;
 }
 
 .badge {
@@ -386,6 +491,8 @@ body.earthquake {
   padding: 2px 6px;
   border-radius: 2px;
   border: 1px solid #000;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .badge.online {
